@@ -1,33 +1,22 @@
 package com.mural.hamzamuhammad.notes_squared;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class LoginActivity extends AppCompatActivity {
-
-    public final static String IS_LOGIN = "com.mural.hamzamuhammad.notes_squared.isLogin";
+public class NoteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-    }
-
-    public void pressLogin(View view) {
-        Intent intent = new Intent(this, NoteActivity.class);
-        Boolean isLogin = true;
-        intent.putExtra(IS_LOGIN, isLogin);
+        setContentView(R.layout.activity_note);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_note, menu);
         return true;
     }
 

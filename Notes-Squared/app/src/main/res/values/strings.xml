@@ -7,4 +7,7 @@
     <string name="login_text">Login</string>
     <string name="login_automatically">Login automatically</string>
     <string name="not_registered">Register</string>
+    <string name="title_activity_note">NoteActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
