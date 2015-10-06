@@ -1,29 +1,37 @@
 package com.mural.hamzamuhammad.notes_squared;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class NoteActivity extends AppCompatActivity {
+public class LaunchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //at the beginning, we need to check a bunch of things before we decide
+        //which activity to start. if there IS an existing account AND the checkbox button is
+        //checked, then go straight to noteactivity
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note);
+        setContentView(R.layout.activity_launch);
         Context context = getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("SUCCESSFUL_LOGIN", true);
+        Intent intent = new Intent(this, LoginActivity.class);
+        if (sharedPref.getBoolean("SUCCESSFUL_LOGIN", false) &&
+                (sharedPref.getInt(getString(R.string.auto_login_key), 2) == 1)) {
+            intent = new Intent(this, NoteActivity.class);
+        }
+        startActivity(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_note, menu);
+        getMenuInflater().inflate(R.menu.menu_launch, menu);
         return true;
     }
 

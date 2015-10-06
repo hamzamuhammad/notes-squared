@@ -38,7 +38,8 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="@string/login_automatically"
-            android:textSize="5pt"/>
+            android:textSize="5pt"
+            android:onClick="automaticallyLogin" />
 
         <Button
             android:id="@+id/login_button"
@@ -58,7 +59,8 @@
         android:textSize="5pt"
         android:layout_marginBottom="55dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="pressRegister" />
 
 
 </RelativeLayout>

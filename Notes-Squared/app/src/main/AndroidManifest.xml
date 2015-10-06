@@ -10,6 +10,15 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name" >
+
+        </activity>
+        <activity
+            android:name=".NoteActivity"
+            android:label="@string/title_activity_note" >
+        </activity>
+        <activity
+            android:name=".LaunchActivity"
+            android:label="@string/title_activity_launch" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,8 +26,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NoteActivity"
-            android:label="@string/title_activity_note" >
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName="com.mural.hamzamuhammad.notes_squared.LoginActivity" >
         </activity>
     </application>
 
