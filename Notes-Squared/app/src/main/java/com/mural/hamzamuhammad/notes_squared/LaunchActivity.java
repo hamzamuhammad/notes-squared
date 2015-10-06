@@ -14,7 +14,7 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //at the beginning, we need to check a bunch of things before we decide
         //which activity to start. if there IS an existing account AND the checkbox button is
-        //checked, then go straight to noteactivity
+        //checked, then go straight to noteactivity.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         Context context = getApplicationContext();
@@ -24,6 +24,8 @@ public class LaunchActivity extends AppCompatActivity {
         if (sharedPref.getBoolean("SUCCESSFUL_LOGIN", false) &&
                 (sharedPref.getInt(getString(R.string.auto_login_key), 2) == 1)) {
             intent = new Intent(this, NoteActivity.class);
+            String username = sharedPref.getString("LAST_USER", "");
+            intent.putExtra("USERNAME", username);
         }
         startActivity(intent);
     }

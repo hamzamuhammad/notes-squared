@@ -13,7 +13,7 @@ import android.widget.EditText;
 public class LoginActivity extends AppCompatActivity {
 
 
-    public final static String SUCCESSFUL_LOGIN = "com.mural.hamzamuhammad.notes_squared.SUCESSFUL_LOGIN";
+    public final static String SUCCESSFUL_LOGIN = "com.mural.hamzamuhammad.notes_squared.SUCCESSFUL_LOGIN";
 
     private SharedPreferences sharedPref;
 
@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         else
             isLogin = true;
         intent.putExtra(SUCCESSFUL_LOGIN, true);
+        intent.putExtra("USERNAME", username);
         if (isLogin)
             startActivity(intent);
     }
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void makeAlertDialog(String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-        alertDialog.setTitle("Error");
+        alertDialog.setTitle("Alert");
         alertDialog.setMessage(message);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
