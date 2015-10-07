@@ -8,6 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/*
+Since we have not developed a concrete concept of what this Activity does, we choose to leave the
+comments blank. An important thing to note is that whichever activity calls this sends an intent
+that has a username String attached to it, which this activity uses to not only say that a
+successful login has occurred but the last user to successfully login (which is whoever sent the
+intent). In addition the ActionBar is utilized by making the setting button redirect to the
+SettingsActivity, along with an intent that contains the current username (which allows the delete
+account method to function by telling it who's account we are deleting).
+ */
 public class NoteActivity extends AppCompatActivity {
 
     private String username;

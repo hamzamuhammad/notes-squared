@@ -5,16 +5,29 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
-public class LaunchActivity extends AppCompatActivity {
+/*
+This is the first activity that is launched whenever the app is opened. It's main purpose is to
+decide which activity to start first, based on whether the user has used the app before and what
+settings he used.
+ */
+public class LaunchActivity extends AppCompatActivity { //appcompatactivity helps maintain compatibility for older android devices
 
+    /*
+    Only useful method to override is the onCreate one, since when the activity is created the
+    following actions must take place. First, we need the app context in order to access a private
+    shared preferences file named TEMP (which stores information as key/value pairs). Then, we make
+    an intent to call the activity LoginActivity which brings the user to the main login page.
+    However, we need to check whether a user has successfully logged into the app before AND that
+    they selected the 'log in automatically' option. A key value pair of type boolean is made when
+    the user actually gets to the NoteActivity (more on this later) and if it's true along with the
+    auto login option being 1 (or yes), change the intent from LoginActivity to NoteActivity, the
+    main activity of the app (skipping the part of logging in again). Another crucial thing to do
+    is to get the username of the most recent user who used the app, and send it to the NoteActivity
+    which will eventually need this (explained in detail later on). Then we simply start the intent.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //at the beginning, we need to check a bunch of things before we decide
-        //which activity to start. if there IS an existing account AND the checkbox button is
-        //checked, then go straight to noteactivity.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         Context context = getApplicationContext();
@@ -28,27 +41,5 @@ public class LaunchActivity extends AppCompatActivity {
             intent.putExtra("USERNAME", username);
         }
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_launch, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
