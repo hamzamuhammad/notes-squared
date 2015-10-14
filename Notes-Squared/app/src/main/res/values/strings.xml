@@ -4,6 +4,7 @@
     <string name="welcome_text">Welcome to Notes-Squared!</string>
     <string name="enter_username">Enter username</string>
     <string name="enter_password">Enter password</string>
+    <string name="enter_password_again">Enter password again</string>
     <string name="login_text">Login</string>
     <string name="login_automatically">Login automatically</string>
     <string name="not_registered">Register</string>

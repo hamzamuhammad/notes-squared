@@ -93,6 +93,9 @@ public class LoginActivity extends AppCompatActivity {
     public void pressRegister(View view) {
         //since the user is trying to make a new account, we redirect them to a new activity
         Intent intent = new Intent(this, RegisterActivity.class);
+        EditText usernameField = (EditText) findViewById(R.id.username_value);
+        String username = usernameField.getText().toString();
+        intent.putExtra("DESIRED_USERNAME", username);
         startActivity(intent);
     }
 

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import java.io.File;
+
 /*
 This is the first activity that is launched whenever the app is opened. It's main purpose is to
 decide which activity to start first, based on whether the user has used the app before and what
@@ -33,12 +35,17 @@ public class LaunchActivity extends AppCompatActivity { //appcompatactivity help
         Context context = getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
         Intent intent = new Intent(this, LoginActivity.class);
         if (sharedPref.getBoolean("SUCCESSFUL_LOGIN", false) &&
                 (sharedPref.getInt(getString(R.string.auto_login_key), 2) == 1)) {
             intent = new Intent(this, NoteActivity.class);
             String username = sharedPref.getString("LAST_USER", "");
             intent.putExtra("USERNAME", username);
+        }
+        if (!sharedPref.getBoolean("NOT_FIRST_LAUNCH", false)) {
+            File file = new File(context.getFilesDir(), "userEmails.txt");
+            editor.putBoolean("NOT_FIRST_LAUNCH", true);
         }
         startActivity(intent);
     }

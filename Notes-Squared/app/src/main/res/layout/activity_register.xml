@@ -46,6 +46,13 @@
         android:hint="@string/enter_password"
         android:maxLength="15" />
 
+    <EditText
+        android:id="@+id/second_password_value"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:hint="@string/enter_password_again"
+        android:maxLength="15"/>
+
     </LinearLayout>
 
     <CheckBox
