@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 
 /*
@@ -69,9 +71,27 @@ public class RegisterActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             String email = emailEditText.getText().toString();
+            boolean validEmail = true;
+            if (sharedPref.getBoolean("NOT_FIRST_LAUNCH", false)) {
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(new
+                            File(context.getFilesDir(), "userEmails.txt")));
+                    String currLine = bufferedReader.readLine();
+                    while ((currLine != null) && validEmail) {
+                        if (currLine.equals(email))
+                            validEmail = false;
+                        currLine = bufferedReader.readLine();
+                    }
+                    bufferedReader.close();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             String secondPassword = secondPasswordEditText.getText().toString();
             String defaultValue = "";
-            if (!username.equals("") && !password.equals("")) { //do we need to check condition #2?
+            if (!username.equals("") && !password.equals("") && validEmail) { //do we need to check
+            // condition #2?
                 if (sharedPref.getString(username, defaultValue).equals(defaultValue) && password
                         .equals(secondPassword)) {
                     editor.putString(username, password);
@@ -96,6 +116,10 @@ public class RegisterActivity extends AppCompatActivity {
                 else
                     makeAlertDialog("Username already exists, please select another one");
             }
+            else if (!validEmail)
+                makeAlertDialog("Email already exists");
+            else
+                makeAlertDialog("Please fill out all the fields");
             editor.commit();
         }
         else //copied from stack overflow, http://stackoverflow.com/questions/26097513/android-simple-alert-dialog

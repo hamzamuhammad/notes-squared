@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notes-Squared</string>
+    <string name="app_name">Notes Squared</string>
     <string name="action_settings">Settings</string>
     <string name="welcome_text">Welcome to Notes-Squared!</string>
     <string name="enter_username">Enter username</string>
@@ -8,18 +8,19 @@
     <string name="login_text">Login</string>
     <string name="login_automatically">Login automatically</string>
     <string name="not_registered">Register</string>
-    <string name="title_activity_note">NoteActivity</string>
+    <string name="title_activity_note">Notes</string>
     <string name="preference_file_name">com.mural.hamzamuhammad.notes_squared.TEMP</string>
     <string name="auto_login_key">auto_login_key</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_launch">LaunchActivity</string>
-    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_launch">Notes Squared</string>
+    <string name="title_activity_register">Register</string>
     <string name="registration_text">Please enter a valid email, and a username and password of less than 15 characters each</string>
     <string name="enter_email_address">Enter email address</string>
     <string name="user_agreement">I agree to all the terms and conditions</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="settings_clear_list">Clear list</string>
     <string name="settings_delete_account">Delete account</string>
     <string name="settings_logout">Logout</string>
     <string name="save_settings">Save settings</string>
+    <string name="title_activity_login">Login</string>
 </resources>
