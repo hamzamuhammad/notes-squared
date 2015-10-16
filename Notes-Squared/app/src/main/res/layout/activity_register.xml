@@ -34,24 +34,24 @@
 
     <EditText
         android:id="@+id/username_value"
-        android:layout_width="180dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/enter_username"
         android:maxLength="15" />
 
     <EditText
         android:id="@+id/password_value"
-        android:layout_width="180dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/enter_password"
-        android:maxLength="15" />
+        android:maxLength="20" />
 
     <EditText
         android:id="@+id/second_password_value"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:hint="@string/enter_password_again"
-        android:maxLength="15"/>
+        android:maxLength="20"/>
 
     </LinearLayout>
 

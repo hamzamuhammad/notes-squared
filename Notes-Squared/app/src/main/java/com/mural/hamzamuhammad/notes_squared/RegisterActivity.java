@@ -16,6 +16,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
 Important activity that takes user account information (email address, username, and password) and
@@ -71,6 +73,24 @@ public class RegisterActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             String email = emailEditText.getText().toString();
+            Pattern emailRegexPattern = Pattern.compile("^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
+            Pattern usernameRegexPattern = Pattern.compile("^[a-zA-z0-9_-]{3,15}$");
+            Pattern passwordRegexPattern = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=" +
+                    ".*[@#$%]).{6,20})");
+            Matcher regexChecker;
+            regexChecker = emailRegexPattern.matcher(email);
+            boolean validUserEmail = true;
+            boolean validUsername = true;
+            boolean validPassword = true;
+            if (!regexChecker.matches())
+                validUserEmail = false;
+            regexChecker = usernameRegexPattern.matcher(username);
+            if (!regexChecker.matches())
+                validUsername = false;
+            regexChecker = passwordRegexPattern.matcher(password);
+            if (!regexChecker.matches())
+                validPassword = false;
+
             boolean validEmail = true;
             if (sharedPref.getBoolean("NOT_FIRST_LAUNCH", false)) {
                 try {
@@ -90,10 +110,26 @@ public class RegisterActivity extends AppCompatActivity {
             }
             String secondPassword = secondPasswordEditText.getText().toString();
             String defaultValue = "";
-            if (!username.equals("") && !password.equals("") && validEmail) { //do we need to check
+            if (username.equals("") || password.equals("") || secondPassword.equals("") || email
+                    .equals(""))
+                makeAlertDialog("Please fill out all fields");
+            else if (!validUserEmail)
+                makeAlertDialog("Invalid email");
+            else if (!validUsername)
+                makeAlertDialog("Invalid username; must have length 3-15");
+            else if (!validPassword)
+                makeAlertDialog("Invalid password; must have at least 1 digit, 1 uppercase " +
+                        "letter, 1 lowercase letter, have one of these @#$%, and length 6-20");
+            else if (validEmail) { //do we need to
+            // check
             // condition #2?
-                if (sharedPref.getString(username, defaultValue).equals(defaultValue) && password
-                        .equals(secondPassword)) {
+                boolean userExists = sharedPref.getString(username, defaultValue).equals
+                        (defaultValue);
+                if (!userExists)
+                    makeAlertDialog("Username already exists, please select another one");
+                else if (!(password.equals(secondPassword)))
+                    makeAlertDialog("Passwords do not match");
+                else {
                     editor.putString(username, password);
                     //this is where we put the email in text file
                     try {
@@ -109,17 +145,17 @@ public class RegisterActivity extends AppCompatActivity {
                     makeAlertDialog("Registration complete");
                     Intent intent = new Intent(this, NoteActivity.class);
                     intent.putExtra("USERNAME", username);
+                    intent.putExtra("USER_EMAIL", email);
+                    int count = sharedPref.getInt("USER_COUNT", 0); //workaround, keep count of
+                    // what number a user was.
+                    editor.putInt(username + "/COUNT", count + 1);
+                    editor.putInt("USER_COUNT", count + 1);
+                    editor.commit();
                     startActivity(intent); //do we need to commit changes BEFORE we call the intent???
                 }
-                else if (!(password.equals(secondPassword)))
-                    makeAlertDialog("Passwords do not match");
-                else
-                    makeAlertDialog("Username already exists, please select another one");
             }
-            else if (!validEmail)
-                makeAlertDialog("Email already exists");
             else
-                makeAlertDialog("Please fill out all the fields");
+                makeAlertDialog("Email already exists");
             editor.commit();
         }
         else //copied from stack overflow, http://stackoverflow.com/questions/26097513/android-simple-alert-dialog

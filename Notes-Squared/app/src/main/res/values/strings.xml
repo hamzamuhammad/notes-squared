@@ -14,7 +14,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_launch">Notes Squared</string>
     <string name="title_activity_register">Register</string>
-    <string name="registration_text">Please enter a valid email, and a username and password of less than 15 characters each</string>
+    <string name="registration_text">Please enter a valid email, and a username and password</string>
     <string name="enter_email_address">Enter email address</string>
     <string name="user_agreement">I agree to all the terms and conditions</string>
     <string name="title_activity_settings">Settings</string>

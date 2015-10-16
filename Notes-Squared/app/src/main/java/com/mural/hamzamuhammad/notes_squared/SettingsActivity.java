@@ -9,6 +9,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+
 /*
 A relatively simple activity that has 3 buttons that allow the user to do some basic settings
 management. The XML page is also fairly unsophisticated, but the important functionality is there,
@@ -42,8 +49,38 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+        int userNumber = sharedPref.getInt(username + "/COUNT", 0);
         editor.remove(username);
         editor.commit();
+        ArrayList<String> newFile = new ArrayList<String>();
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new
+                    File(context.getFilesDir(), "userEmails.txt")));
+            String currLine = bufferedReader.readLine();
+            int count = 1;
+            while ((currLine != null)) {
+                if (count != userNumber)
+                    newFile.add(currLine);
+                currLine = bufferedReader.readLine();
+                count++;
+            }
+            bufferedReader.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new
+                    File(context.getFilesDir(), "userEmails.txt"), false));
+            for (String s : newFile) {
+                bufferedWriter.write(s);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         makeAlertDialog("Account deleted");
     }
 
