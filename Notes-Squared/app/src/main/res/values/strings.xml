@@ -23,4 +23,7 @@
     <string name="settings_logout">Logout</string>
     <string name="save_settings">Save settings</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_edit">Edit</string>
+    <string name="save_note">Save</string>
+    <string name="new_note">New</string>
 </resources>

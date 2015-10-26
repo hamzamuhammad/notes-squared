@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.putInt(autoLoginKeyStringId, 0);
         else
             editor.putInt(autoLoginKeyStringId, 1);
-        editor.commit();
+        editor.apply();
     }
 
     /*

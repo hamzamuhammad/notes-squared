@@ -5,8 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
 Since we have not developed a concrete concept of what this Activity does, we choose to leave the
@@ -26,13 +35,33 @@ public class NoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         username = this.getIntent().getStringExtra("USERNAME");
+        Log.d("USER VAL", username);
         Context context = getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("SUCCESSFUL_LOGIN", true);
         editor.putString("LAST_USER", username);
-        editor.commit();
+        editor.apply();
+        ArrayList<String> userNotes = new ArrayList<String>();
+        //need to get set from preferences, and sort that shit
+        Set<String> notes = sharedPref.getStringSet(username + "_NOTES", new HashSet<String>());
+        for (String s : notes)
+            userNotes.add(s);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout
+                .simple_list_item_1, userNotes);
+        ListView listView = (ListView) findViewById(R.id.note_view);
+        final Intent intent = new Intent(this, EditActivity.class);
+        // Create a message handling object as an anonymous class.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                String note = parent.getItemAtPosition(position).toString();
+                intent.putExtra("USER_NOTE", note);
+                intent.putExtra("USERNAME", username);
+                startActivity(intent);
+            }
+        });
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -44,9 +73,15 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("USERNAME", username);
+                startActivity(intent);
+                return true;
+            case R.id.new_note:
+                intent = new Intent(this, EditActivity.class);
+                intent.putExtra("USER_NOTE", "New Note");
                 intent.putExtra("USERNAME", username);
                 startActivity(intent);
                 return true;

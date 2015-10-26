@@ -23,10 +23,13 @@ such as clearing the notes, deleting current account, and logout.
  */
 public class SettingsActivity extends AppCompatActivity {
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        username = this.getIntent().getStringExtra("USERNAME");
     }
 
     /*
@@ -34,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
     also ask "ARE YOU SURE?" before doing so.
      */
     public void clearList(View view) {
-        //to do
+        //simply use editor to delete set preference
     }
 
     /*
@@ -44,14 +47,13 @@ public class SettingsActivity extends AppCompatActivity {
     dialog is created to inform the user.
      */
     public void deleteAccount(View view) {
-        String username = this.getIntent().getStringExtra("USERNAME");
         Context context = getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         int userNumber = sharedPref.getInt(username + "/COUNT", 0);
         editor.remove(username);
-        editor.commit();
+        editor.apply();
         ArrayList<String> newFile = new ArrayList<String>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new
@@ -81,12 +83,21 @@ public class SettingsActivity extends AppCompatActivity {
         catch (Exception e) {
             e.printStackTrace();
         }
+        editor.remove(username + "_NOTES");
+        editor.apply();
         makeAlertDialog("Account deleted");
     }
 
     //Simply makes an intent and launches LoginActivity
     public void logoutAccount(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, NoteActivity.class);
+        intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
 

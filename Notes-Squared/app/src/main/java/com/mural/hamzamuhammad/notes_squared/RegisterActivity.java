@@ -16,6 +16,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -143,6 +145,9 @@ public class RegisterActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     makeAlertDialog("Registration complete");
+                    Set<String> temp = new HashSet<String>();
+                    temp.add("Touch me to edit a note");
+                    editor.putStringSet(username + "_NOTES", temp);
                     Intent intent = new Intent(this, NoteActivity.class);
                     intent.putExtra("USERNAME", username);
                     intent.putExtra("USER_EMAIL", email);
@@ -150,13 +155,13 @@ public class RegisterActivity extends AppCompatActivity {
                     // what number a user was.
                     editor.putInt(username + "/COUNT", count + 1);
                     editor.putInt("USER_COUNT", count + 1);
-                    editor.commit();
+                    editor.apply();
                     startActivity(intent); //do we need to commit changes BEFORE we call the intent???
                 }
             }
             else
                 makeAlertDialog("Email already exists");
-            editor.commit();
+            editor.apply();
         }
         else //copied from stack overflow, http://stackoverflow.com/questions/26097513/android-simple-alert-dialog
             makeAlertDialog("You must accept the user agreement to create an account");

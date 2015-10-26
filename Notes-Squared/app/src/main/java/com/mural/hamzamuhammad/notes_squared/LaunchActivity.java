@@ -46,7 +46,7 @@ public class LaunchActivity extends AppCompatActivity { //appcompatactivity help
         if (!sharedPref.getBoolean("NOT_FIRST_LAUNCH", false)) {
             File file = new File(context.getFilesDir(), "userEmails.txt");
             editor.putBoolean("NOT_FIRST_LAUNCH", true);
-            editor.commit();
+            editor.apply();
         }
         startActivity(intent);
     }
